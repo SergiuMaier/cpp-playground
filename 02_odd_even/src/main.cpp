@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 void printOddOrEven(int number)
 {
 	if (number % 2 == 0)
@@ -13,6 +15,16 @@ void printOddOrEven(int number)
 	{
 		printf("ODD\n");
 	}
+}
+
+bool checkNumber(string str) 
+{
+	for (int i = 0; i < str.length(); i++){
+		if (isdigit(str[i]) == false) 
+			return false;
+		else
+			return true;	
+	}		
 }
 
 int main(int argc, char *argv[])
@@ -35,23 +47,28 @@ int main(int argc, char *argv[])
 	{
 		printf("No program arguments found.\n");
 	}
-	
 	// TODO(Gusti): i don't know why this doesn't work, but someone please FIX it.
+	
 	// --------------- start
 
 	// Get the first argument
 	std::string argumentAsString = argv[1];
-	const char* argumentAsCharArray = argumentAsString.c_str();
+	const char* argumentAsCharArray = argumentAsString.c_str(); 
 
-	//number = argv[1]; // No
-	//should use atoi?
-	// or std::stoi?
+	number = std::stoi(argv[1], nullptr, 0);
 
-	std::cout << argumentAsString << std::endl; // i think this should be removed
+	if (checkNumber(argumentAsString))
+		printOddOrEven(number);
+	else
+		printf("NAN\n");
+
+	// I tried several ways to solve the bonus requirement, but I failed. I'm missing something...
+	// One method was to define a function that checks whether letters or numbers were typed. 
+	// I did not delete the function because it does not affect the basic functionality of the program.
 
 	// --------------- stop
 
-	printOddOrEven(number);
-
+	//printOddOrEven(number);
+	
 	return 0;
 }
