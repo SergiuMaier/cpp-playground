@@ -55,10 +55,13 @@ int main(int argc, char *argv[])
 	std::string argumentAsString = argv[1];
 	const char* argumentAsCharArray = argumentAsString.c_str(); 
 
-	number = std::stoi(argv[1], nullptr, 0);
+	//number = std::stoi(argv[1], nullptr, 0);
 
 	if (checkNumber(argumentAsString))
+	{
+		number = std::stoi(argv[1], nullptr, 0);
 		printOddOrEven(number);
+	}
 	else
 		printf("NAN\n");
 
