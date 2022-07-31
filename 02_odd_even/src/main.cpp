@@ -65,10 +65,6 @@ int main(int argc, char *argv[])
 	else
 		printf("NAN\n");
 
-	// I tried several ways to solve the bonus requirement, but I failed. I'm missing something...
-	// One method was to define a function that checks whether letters or numbers were typed. 
-	// I did not delete the function because it does not affect the basic functionality of the program.
-
 	// --------------- stop
 
 	//printOddOrEven(number);
