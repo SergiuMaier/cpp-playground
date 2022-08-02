@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
 	char* ptr = new char[argumentAsString.length() + 1];
 	
-	if (argc > 2)
+	if (argc >= 2)
 	{
 		for(int i = 1; i <= (argc-1); i++) //argc-1 becuse the first argument is the .exe file
 		{
