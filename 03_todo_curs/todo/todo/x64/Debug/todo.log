@@ -1,0 +1,3 @@
+﻿  Source.cpp
+D:\CURSURI\.SIEMENS\cpp\curs3\todo\todo\Source.cpp(7,13): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  todo.vcxproj -> D:\CURSURI\.SIEMENS\cpp\curs3\todo\x64\Debug\todo.exe

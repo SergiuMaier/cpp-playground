@@ -19,12 +19,18 @@ void printOddOrEven(int number)
 
 bool checkNumber(string str) 
 {
-	for (int i = 0; i < str.length(); i++){
-		if (isdigit(str[i]) == false) 
-			return false;
+	bool status;
+
+	for (int i = 0; i < str.length(); i++)
+	{
+		if ( (isdigit(str[i]) == false) && (str[0] != '-') ) //I know it's not perfect 
+			return false;	//nan
 		else
-			return true;	
-	}		
+			status = true;  //number
+	}
+
+	if (status)
+		return status;
 }
 
 int main(int argc, char *argv[])
@@ -46,16 +52,14 @@ int main(int argc, char *argv[])
 	if (argc <= 1)
 	{
 		printf("No program arguments found.\n");
+		return 0;
 	}
-	// TODO(Gusti): i don't know why this doesn't work, but someone please FIX it.
 	
 	// --------------- start
 
 	// Get the first argument
 	std::string argumentAsString = argv[1];
 	const char* argumentAsCharArray = argumentAsString.c_str(); 
-
-	//number = std::stoi(argv[1], nullptr, 0);
 
 	if (checkNumber(argumentAsString))
 	{
@@ -67,7 +71,5 @@ int main(int argc, char *argv[])
 
 	// --------------- stop
 
-	//printOddOrEven(number);
-	
 	return 0;
 }
