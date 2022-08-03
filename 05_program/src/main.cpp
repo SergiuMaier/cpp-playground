@@ -23,15 +23,7 @@ int main(int argc, char *argv[])
 	{
 		for(int i = 1; i <= (argc-1); i++) //argc-1 becuse the first argument is the .exe file
 		{
-			std::string argumentAsString = argv[i];
-			std::strcpy(ptr, argumentAsString.c_str()); //a c-string copy of argumentAsString
-
-			char* ptr2 = std::strtok(ptr, " "); 
-			while (ptr2 != 0)
-			{
-				std::cout << ptr2 << '\n';
-				ptr2 = std::strtok(NULL, " ");
-			}
+			std::cout << argv[i] << "\n"; //m-am complicat data trecuta, da :))
 		}	
 	}
 
