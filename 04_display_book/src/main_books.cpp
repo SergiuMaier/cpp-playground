@@ -3,7 +3,7 @@
 
 // Define the maximum length for the name to use.
 // Specify the length of characters in the content (Excluding the terminator).
-#define MAX_NAME_LEN 20
+#define MAX_NAME_LEN 50
 #define MAX_TITLE_LEN 50
 
 struct Author
@@ -26,7 +26,7 @@ struct Author
 struct Book
 {
 	int id;
-	char title[50];
+	char title[MAX_TITLE_LEN];
 
 	int numAuthors;
 	Author authors[5];
@@ -34,8 +34,8 @@ struct Book
 	void addAuthor(Author author)
 	{
 		// TODO: add an author to the container authors array.
-		authors[numAuthors] = author;
-		numAuthors++;
+			authors[numAuthors] = author;
+			numAuthors++;
 	}
 
 	void print()
@@ -56,6 +56,8 @@ struct Book
 void setBookName(Book& book, std::string name)
 {
 	strncpy(book.title, name.c_str(), MAX_TITLE_LEN);
+
+	book.title[MAX_TITLE_LEN] = 0;
 }
 
 int main()
