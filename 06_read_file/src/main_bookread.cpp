@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 /**
 	Define a simple book.
@@ -33,9 +34,32 @@ public:
 */
 std::vector<Book> readBooksFromTextFile(const std::string& file_name)
 {
-	std::vector<Book> results;
 	// TODO: BEGIN read the file -------------------------------------
+	
+	std::ifstream file;
+	file.open("../../data/ermahgerd_berks.txt");
+	
+	if (!file)
+		std::cout << "Error in opening the file!\n" << std::endl;
+	else 
+		std::cout << "Successfully opened the file!\n" << std::endl;
 
+	std::vector<Book> results;
+	Book myBook;
+
+	std::string line1, line2; //to store the line
+
+	while (!file.eof()) { //reading line by line
+		getline(file, line1);
+		myBook.name = line1;
+		
+		getline(file, line2);//works 
+		myBook.authors = line2;
+		
+		results.emplace_back(myBook);
+	}
+	
+	file.close();
 
 	// E.g. Book myBook;
 	//		...
@@ -57,7 +81,7 @@ int main()
 	std::vector<Book> books_from_file = readBooksFromTextFile(input_data);
 
 	// Print the data
-	std::cout << "Here are all the books found in the data file..." << std::endl;
+	std::cout << "Here are all the books found in the data file...\n" << std::endl;
 	for (auto book : books_from_file)
 	{
 		book.print();
