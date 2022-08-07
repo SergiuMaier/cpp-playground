@@ -68,7 +68,6 @@ std::vector<Book> readBooksFromIniFile(const std::string& file_name)
 	if (ini_file.LoadFile("../../data/ermahgerd_berks.ini") < 0)
 		std::cout << "Could not open the file!\n";
 
-	int contor = 0;
 	std::stringstream ss;
 
 	for (int i = 0; i < 4; i++){
