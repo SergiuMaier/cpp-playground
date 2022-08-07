@@ -15,13 +15,16 @@
 class Book
 {
 public:
+	int contor;
 	std::string name;
 	std::string authors;
 
 	void print()
 	{
-		std::cout << this->name << std::endl;
-		std::cout << "\t(by " << this->authors << ")" << std::endl;
+		std::cout << "[book." << this->contor <<"]\n";
+		std::cout << "name=" << this->name << std::endl;
+		std::cout << "author=" << this->authors << std::endl;
+		std::cout << "\n";
 	}
 };
 
@@ -44,10 +47,9 @@ public:
 	@return Vector of books.
 */
 std::vector<Book> readBooksFromIniFile(const std::string& file_name)
-{
-	std::vector<Book> results;
+{	
 	// TODO: BEGIN read the file -------------------------------------
-	
+
 	// E.g. Book myBook;
 	//		// build the section name (E.g. book.1)
 	//		std::stringstream ss;
@@ -57,7 +59,31 @@ std::vector<Book> readBooksFromIniFile(const std::string& file_name)
 
 	//		...
 	//		results.emplace_back(myBook);
+	
+	std::vector<Book> results;
+	Book myBook;
 
+	CSimpleIniA ini_file;
+	ini_file.SetUnicode();
+	if (ini_file.LoadFile("../../data/ermahgerd_berks.ini") < 0)
+		std::cout << "Could not open the file!\n";
+
+	int contor = 0;
+	std::stringstream ss;
+
+	for (int i = 0; i < 4; i++){
+
+		myBook.contor = i + 1;
+		ss << "book." << (i + 1);
+		std::string& section_name = ss.str();
+		const char* css = section_name.c_str();
+
+		myBook.name = ini_file.GetValue(css, "name", "def");
+		myBook.authors = ini_file.GetValue(css, "author", "def");
+		
+		results.emplace_back(myBook);
+	}
+	
 	// TODO: END read file and add to results vector ------------------
 	return results;
 }
@@ -68,12 +94,12 @@ int main()
 	// Using the SimpleINI C++ Lib: https://github.com/brofield/simpleini
 
 	// Read the data
-	std::string input_data("PATH_TO_INI_FILE.ini");
+	std::string input_data("../../data/ermahgerd_berks.ini");
 	std::cout << "Reading the data from " << input_data << std::endl;
 	std::vector<Book> books_from_file = readBooksFromIniFile(input_data);
 
 	// Print the data
-	std::cout << "Here are all the books found in the data file..." << std::endl;
+	std::cout << "Here are all the books found in the data file...\n" << std::endl;
 	for (auto book : books_from_file)
 	{
 		book.print();
