@@ -1,5 +1,5 @@
 // Includes
-#define val_max 10; 
+//#define val_max 10; 
 
 // C++ system headers
 #include <iostream>
@@ -73,16 +73,16 @@ std::vector<Book> readBooksFromIniFile(const std::string& file_name)
 	if (ini_file.LoadFile("../../data/ermahgerd_berks.ini") < 0)
 		std::cout << "Could not open the file!\n";
 
-	//------ATTEMPT V2.0-------// So far this is the only way I have managed to solve this
-							   // Probably it could have been done easier
+	// So far this is the only way I have managed to solve this
+    // Probably it could have been done easier
 
 	const char* str= "books";  //the name given in the e.g.;
 	myBook.count = ini_file.GetValue(str, "count", "def"); //getting the number of books writen in the file
-	myBook.printFirst();       //printing the first section but befor not where I want it
+	myBook.printFirst();     //printing the first section but not where I want it
 
-	int countInt = stoi(myBook.count); //converting to int so I can use the value in the loop below
+	int countInt = stoi(myBook.count); //converting to integer to use the value below, in the loop
 	
-	std::stringstream ss[10];  //i tried std::stringstream ss[val_max] or ss[countInt] => error 	
+	std::stringstream ss[10];  //I tried std::stringstream ss[val_max] or ss[countInt] => error 	
 	
 	for (int i = 0; i < countInt; i++) {
 
@@ -116,7 +116,7 @@ int main()
 	
 	//Book book;
 	//book.printFirst(); //not ok, something is missing 
-	
+
 	for (auto book : books_from_file)
 	{
 		book.print();
