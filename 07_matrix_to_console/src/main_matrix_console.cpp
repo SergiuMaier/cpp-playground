@@ -63,7 +63,7 @@ public:
 	void setCellXY(size_t x, size_t y, char cell_content)
 	{
 		// TODO: add functionality
-		mat.at(x).at(y) = cell_content; //position x,y from vector
+		mat.at(y).at(x) = cell_content; //position x,y from vector
 	}
 
 	void print()
