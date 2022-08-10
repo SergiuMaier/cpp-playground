@@ -26,18 +26,17 @@ int main()
 	size_t lines;
 	size_t columns;
 
-	getUserInput(lines, columns);
+	getUserInput(columns, lines);
 	initMatrix(matrix, lines, columns);
 	
 	//printMatrix(matrix);
 	
 	game(matrix);
-	printMatrix(matrix);
 
 	return 0;
 }
 
-void getUserInput(size_t& lines,size_t& columns)
+void getUserInput(size_t& columns,size_t& lines)
 {
 	while (true)
 	{
@@ -75,7 +74,7 @@ void getUserInput(size_t& lines,size_t& columns)
 
 void initMatrix(std::vector<std::string>& matrixToInit, size_t lines, size_t columns) {
 
-	std::string defaultValue = "0"; //dead
+	std::string defaultValue = "-"; //dead
 
 	for (size_t lineIndex = 0; lineIndex < (lines + 2); lineIndex++) //adding an extra border I can treat the cells form the initial border
 	{
@@ -146,21 +145,25 @@ void createNextGeneration(std::vector<std::string>& matrix) {
 	{
 		for (size_t colIndex = 1; colIndex < (matrix[lineIndex].size() - 1); colIndex++)
 		{
-			aliveNeighbours = getNumberOfAliveNeighbours(matrix, colIndex, lineIndex);
+			aliveNeighbours = getNumberOfAliveNeighbours(matrix, lineIndex, colIndex);
+			//std::cout << aliveNeighbours << std::endl;
 
 			//implementing the rules:
-
-			if (matrix[lineIndex][colIndex] == ALIVE_CELL && aliveNeighbours < 2)
+			if (matrix[lineIndex][colIndex] == DEAD_CELL && aliveNeighbours == 3)
+			{
+				nextGenMatrix[lineIndex][colIndex] == ALIVE_CELL;
+			}
+			else if (matrix[lineIndex][colIndex] == ALIVE_CELL && aliveNeighbours < 2)
 			{
 				nextGenMatrix[lineIndex][colIndex] = DEAD_CELL;
+			}
+			else if (matrix[lineIndex][colIndex] == ALIVE_CELL && (aliveNeighbours == 2 || aliveNeighbours == 3))
+			{
+				nextGenMatrix[lineIndex][colIndex] = ALIVE_CELL;
 			}
 			else if (matrix[lineIndex][colIndex] == ALIVE_CELL && aliveNeighbours > 3)
 			{
 				nextGenMatrix[lineIndex][colIndex] = DEAD_CELL;
-			}
-			else if (matrix[lineIndex][colIndex] == DEAD_CELL && aliveNeighbours == 3)
-			{
-				nextGenMatrix[lineIndex][colIndex] == ALIVE_CELL;
 			}
 		}
 	}
@@ -391,7 +394,7 @@ void drawPattern(Pattern desiredPattern, int x, int y, std::vector<std::string>&
 
 	for (size_t lineIndex = 0; lineIndex < pattern.size(); lineIndex++) //shape of the matrix
 	{
-		for (size_t colIndex = 0; colIndex < pattern[0].size(); colIndex)
+		for (size_t colIndex = 0; colIndex < pattern[0].size(); colIndex++)
 		{
 			matrix[y][current_x] = pattern[lineIndex][colIndex];
 
@@ -426,8 +429,11 @@ void game(std::vector<std::string>& matrix) {
 		Pattern inputPattern = getPattern(x, y);
 	}
 	
+	//printMatrix(matrix);
+
 	while (currentTick < ticks)
 	{
+		std::cout << std::endl << "Generation: " << currentTick << std::endl;
 		printMatrix(matrix);
 		createNextGeneration(matrix);
 		currentTick++;
