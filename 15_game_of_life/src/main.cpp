@@ -26,7 +26,7 @@ int main()
 	size_t lines;
 	size_t columns;
 
-	getUserInput(columns, lines);
+	getUserInput(lines, columns);
 	initMatrix(matrix, lines, columns);
 	
 	//printMatrix(matrix);
@@ -36,7 +36,7 @@ int main()
 	return 0;
 }
 
-void getUserInput(size_t& columns,size_t& lines)
+void getUserInput(size_t& lines,size_t& columns)
 {
 	while (true)
 	{
@@ -151,7 +151,7 @@ void createNextGeneration(std::vector<std::string>& matrix) {
 			//implementing the rules:
 			if (matrix[lineIndex][colIndex] == DEAD_CELL && aliveNeighbours == 3)
 			{
-				nextGenMatrix[lineIndex][colIndex] == ALIVE_CELL;
+				nextGenMatrix[lineIndex][colIndex] = ALIVE_CELL;
 			}
 			else if (matrix[lineIndex][colIndex] == ALIVE_CELL && aliveNeighbours < 2)
 			{
