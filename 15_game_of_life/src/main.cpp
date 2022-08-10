@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 
-#define ALIVE_CELL '1'
-#define DEAD_CELL '0'
+#define ALIVE_CELL '*'
+#define DEAD_CELL '-'
 
 enum Pattern
 {
@@ -44,7 +44,7 @@ void getUserInput(size_t& lines,size_t& columns)
 		int x = 0;
 		int y = 0;
 
-		std::cout << "Enter the dimension of the matrix: (val1 val2)" << std::endl;
+		std::cout << "Enter the dimensions of the matrix: (val1 val2)" << std::endl;
 		if (std::cin.peek() == '\n') //if there is no input => then default val
 		{
 			lines = 20;
@@ -68,9 +68,7 @@ void getUserInput(size_t& lines,size_t& columns)
 		}
 		else 
 		{
-			std::cout << "Input is invalid" << std::endl;
-			//std::cin.clear();
-			//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore the  whole input stream
+			std::cout << "Invalid input!" << std::endl;
 		}
 	}
 }
@@ -100,9 +98,10 @@ void printMatrix(std::vector<std::string>& matrix) {
 		}
 		std::cout << std::endl;
 	} 
+	std::cout << std::endl;
 }
 
-int getNumberOfAliveNeighbours(std::vector<std::string>& matrix, size_t x, size_t y) { //x,y = coordonates of the cell
+int getNumberOfAliveNeighbours(std::vector<std::string>& matrix, size_t x, size_t y) { //x,y = coordinates of the cell
 
 	int aliveNeighbours = 0;
 	
@@ -110,7 +109,7 @@ int getNumberOfAliveNeighbours(std::vector<std::string>& matrix, size_t x, size_
 
 	for (size_t current_x = x; current_x < (x + 3); current_x++)//the top neighbouring cells
 	{
-		if (matrix[y - 1][current_x - 1] == ALIVE_CELL) //minus one so it starts from the top left corner of the cell to the top right one
+		if (matrix[y - 1][current_x - 1] == ALIVE_CELL) //it starts from the top left corner of the cell to the top right corner
 		{
 			aliveNeighbours++;
 		}
@@ -147,7 +146,7 @@ void createNextGeneration(std::vector<std::string>& matrix) {
 	{
 		for (size_t colIndex = 1; colIndex < (matrix[lineIndex].size() - 1); colIndex++)
 		{
-			aliveNeighbours = getNumberOfAliveNeighbours(matrix, lineIndex, colIndex);
+			aliveNeighbours = getNumberOfAliveNeighbours(matrix, colIndex, lineIndex);
 
 			//implementing the rules:
 
@@ -157,11 +156,11 @@ void createNextGeneration(std::vector<std::string>& matrix) {
 			}
 			else if (matrix[lineIndex][colIndex] == ALIVE_CELL && aliveNeighbours > 3)
 			{
-			nextGenMatrix[lineIndex][colIndex] = DEAD_CELL;
+				nextGenMatrix[lineIndex][colIndex] = DEAD_CELL;
 			}
 			else if (matrix[lineIndex][colIndex] == DEAD_CELL && aliveNeighbours == 3)
 			{
-			nextGenMatrix[lineIndex][colIndex] == ALIVE_CELL;
+				nextGenMatrix[lineIndex][colIndex] == ALIVE_CELL;
 			}
 		}
 	}
@@ -184,7 +183,7 @@ int getTick() {
 		}
 		else
 		{
-			std::cout << "\nInvalid input" << std::endl;
+			std::cout << "\nInvalid input!" << std::endl;
 		}
 	}
 }
@@ -211,28 +210,28 @@ Pattern getPattern(int &x, int &y) {
 			switch (pattern)
 			{
 			case Pattern::Beacon:
-				return Beacon;
-				break;
+						return Beacon;
+						break;
 			case Pattern::Blinker:
-				return Blinker;
-				break;
+						return Blinker;
+						break;
 			case Pattern::Block:
-				return Block;
-				break;
+						return Block;
+						break;
 			case Pattern::Boat:
-				return Boat;
-				break;
+						return Boat;
+						break;
 			case Pattern::Pentadecathlon:
-				return Pentadecathlon;
-				break;
+						return Pentadecathlon;
+						break;
 			case Pattern::Glider:
-				return Glider;
-				break;
+						return Glider;
+						break;
 			case Pattern::Pulsar:
-				return Pulsar;
-				break;
+						return Pulsar;
+						break;
 			default:
-				break;
+					break;
 			}
 		}
 		else
@@ -245,7 +244,7 @@ Pattern getPattern(int &x, int &y) {
 std::vector<std::string> drawBlock()
 {
 	std::vector<std::string> patternBeacon;
-	std::string aliveCell = "1";
+	std::string aliveCell = "*";
 
 	patternBeacon.push_back(aliveCell);
 	patternBeacon.push_back(aliveCell);
@@ -258,9 +257,9 @@ std::vector<std::string> drawBlock()
 std::vector<std::string> drawBoat()
 {
 	std::vector<std::string> patternBoat;
-	std::string firstLine = "110";
-	std::string secondLine ="101";
-	std::string thirdLine = "010";
+	std::string firstLine = "**-";
+	std::string secondLine ="*-*";
+	std::string thirdLine = "-*-";
 
 	patternBoat.push_back(firstLine);
 	patternBoat.push_back(secondLine);
@@ -272,7 +271,7 @@ std::vector<std::string> drawBoat()
 std::vector<std::string> drawBlinker()
 {
 	std::vector<std::string> patternBlinker;
-	std::string blinker = "111";
+	std::string blinker = "***";
 	patternBlinker.push_back(blinker);
 
 	return patternBlinker;
@@ -281,10 +280,10 @@ std::vector<std::string> drawBlinker()
 std::vector<std::string> drawBeacon()
 {
 	std::vector<std::string> patternBeacon;
-	std::string firstLine = "1100";
-	std::string secondLine ="1000";
-	std::string thirdLine = "0001";
-	std::string fourthLine ="0011";
+	std::string firstLine = "**--";
+	std::string secondLine ="*---";
+	std::string thirdLine = "---*";
+	std::string fourthLine ="--**";
 
 	patternBeacon.push_back(firstLine);
 	patternBeacon.push_back(secondLine);
@@ -297,8 +296,8 @@ std::vector<std::string> drawBeacon()
 std::vector<std::string> drawPentadecathlon()
 {
 	std::vector<std::string> patternPentad;
-	std::string firstLine = "0010000100"; //first line is also the third one
-	std::string secondLine ="1101111011";
+	std::string firstLine = "--*----*--"; //first line is also the third one
+	std::string secondLine ="**-****-**";
 
 	patternPentad.push_back(firstLine);
 	patternPentad.push_back(secondLine);
@@ -310,9 +309,9 @@ std::vector<std::string> drawPentadecathlon()
 std::vector<std::string> drawGlider()
 {
 	std::vector<std::string> patternGlider;
-	std::string first_line = "010";
-	std::string second_line ="001";
-	std::string third_line = "111";
+	std::string first_line = "-*-";
+	std::string second_line ="--*";
+	std::string third_line = "***";
 
 	patternGlider.push_back(first_line);
 	patternGlider.push_back(second_line);
@@ -324,17 +323,17 @@ std::vector<std::string> drawGlider()
 std::vector<std::string> drawPulsar()
 {
 	std::vector<std::string> patternPulsar;
-	std::string firstLine =  "00000100000100000"; //this line is the same as 2, 14 and 15
-	std::string thirdLine =  "00000110001100000";
-	std::string fourthLine = "00000000000000000"; //the same as 8 and 12
-	std::string fifthLine =  "01110011011001110";
-	std::string sixthLine =  "00010101010101000";
-	std::string seventhLine ="00000110001100000";
-	std::string ninethLine = "00000110001100000";
-	std::string tenthLine =  "00010101010101000";
-	std::string eleventhLine="01110011011001110";
-	std::string thirteenthLine ="00000110001100000";
-	std::string fourteenthLine ="00000110001100000";
+	std::string firstLine =  "-----*-----*-----"; //this line is the same as 2, 14 and 15
+	std::string thirdLine =  "-----**---**-----";
+	std::string fourthLine = "-----------------"; //the same as 8 and 12
+	std::string fifthLine =  "-***--**-**--***-";
+	std::string sixthLine =  "---*-*-*-*-*-*---";
+	std::string seventhLine ="-----**---**-----";
+	std::string ninethLine = "-----**---**-----";
+	std::string tenthLine =  "---*-*-*-*-*-*---";
+	std::string eleventhLine="-***--**-**--***-";
+	std::string thirteenthLine ="-----**---**-----";
+	std::string fourteenthLine ="-----**---**-----";
 
 	patternPulsar.push_back(firstLine);
 	patternPulsar.push_back(firstLine);
@@ -413,26 +412,24 @@ void drawPattern(Pattern desiredPattern, int x, int y, std::vector<std::string>&
 
 void game(std::vector<std::string>& matrix) {
 
-	int tick = getTick();
+	int ticks = getTick();
 	int currentTick = 0;
 	int x, y; //pattern's coordinates
 	Pattern inputPattern = getPattern(x, y);
-
+	
+	drawPattern(inputPattern, x, y, matrix);
+	
 	//checking the coordinates of the pattern
 	while (x == 0 || y == 0 || x > (matrix[1].size() - 2) || y > (matrix.size() - 2))
 	{
 		std::cout << "Invalid coordinates" << std::endl;
 		Pattern inputPattern = getPattern(x, y);
 	}
-
-	drawPattern(inputPattern, x, y, matrix);
-
-	while (currentTick < tick)
+	
+	while (currentTick < ticks)
 	{
-		std::cout << std::endl << "Generation: " << currentTick << std::endl;
-		currentTick++;
-
 		printMatrix(matrix);
 		createNextGeneration(matrix);
+		currentTick++;
 	}
 }
