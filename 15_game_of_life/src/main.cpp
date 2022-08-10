@@ -36,7 +36,7 @@ int main()
 	return 0;
 }
 
-void getUserInput(size_t& lines,size_t& columns)
+void getUserInput(size_t& columns,size_t& lines)
 {
 	while (true)
 	{
@@ -145,7 +145,7 @@ void createNextGeneration(std::vector<std::string>& matrix) {
 	{
 		for (size_t colIndex = 1; colIndex < (matrix[lineIndex].size() - 1); colIndex++)
 		{
-			aliveNeighbours = getNumberOfAliveNeighbours(matrix, lineIndex, colIndex);
+			aliveNeighbours = getNumberOfAliveNeighbours(matrix, colIndex, lineIndex);
 			//std::cout << aliveNeighbours << std::endl;
 
 			//implementing the rules:
