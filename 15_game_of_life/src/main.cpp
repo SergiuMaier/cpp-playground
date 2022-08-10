@@ -420,8 +420,6 @@ void game(std::vector<std::string>& matrix) {
 	int x, y; //pattern's coordinates
 	Pattern inputPattern = getPattern(x, y);
 	
-	drawPattern(inputPattern, x, y, matrix);
-	
 	//checking the coordinates of the pattern
 	while (x == 0 || y == 0 || x > (matrix[1].size() - 2) || y > (matrix.size() - 2))
 	{
@@ -429,13 +427,14 @@ void game(std::vector<std::string>& matrix) {
 		Pattern inputPattern = getPattern(x, y);
 	}
 	
-	//printMatrix(matrix);
-
+	drawPattern(inputPattern, x, y, matrix);
+	
 	while (currentTick < ticks)
 	{
 		std::cout << std::endl << "Generation: " << currentTick << std::endl;
 		printMatrix(matrix);
 		createNextGeneration(matrix);
 		currentTick++;
+		system("cls");
 	}
 }
